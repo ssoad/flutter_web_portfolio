@@ -4,9 +4,10 @@ final navigationItemsProvider = Provider<List<NavigationItem>>((ref) {
   return [
     const NavigationItem(name: "Home", route: "/home"),
     const NavigationItem(name: "About", route: "/about"),
-    const NavigationItem(name: "Experience", route: "/experience"),
-    const NavigationItem(name: "Projects", route: "/projects"),
     const NavigationItem(name: "Skills", route: "/skills"),
+    const NavigationItem(name: "Experience", route: "/experience"),
+    const NavigationItem(name: "Education", route: "/education"),
+    const NavigationItem(name: "Projects", route: "/projects"),
     const NavigationItem(name: "Contact", route: "/contact"),
   ];
 });

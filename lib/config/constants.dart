@@ -5,7 +5,10 @@ class AppConstants {
   static const String role = "Flutter Developer";
   static const String email = "your.email@example.com";
   static const String github = "https://github.com/ssoad";
-  static const String linkedin = "https://linkedin.com/in/yourusername";
+  static const String linkedin = "https://linkedin.com/in/ssoad";
+  static const String facebook = "https://facebook.com/sssoad";
+  static const String cv = "https://example.com/cv.pdf";
+  static const String resume = "assets/resume.pdf";
 
   static const List<String> navItems = [
     "Home",
@@ -14,4 +17,7 @@ class AppConstants {
     "Skills",
     "Contact"
   ];
+
+  static const String profileImage =
+      "https://avatars.githubusercontent.com/u/44132311?v=4";
 }

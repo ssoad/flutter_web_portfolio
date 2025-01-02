@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart' hide NavigationBar;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_experiment/features/education/presentation/views/education_view.dart';
+import 'package:flutter_web_experiment/features/experience/presentation/views/experience_view.dart';
 import '../../about/presentation/views/about_view.dart';
 import '../../contact/view/contact_view.dart';
 import '../../footer/widgets/footer_view.dart';
@@ -21,8 +23,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   final Map<String, GlobalKey> _sectionKeys = {
     '/home': GlobalKey(),
     '/about': GlobalKey(),
-    '/projects': GlobalKey(),
     '/skills': GlobalKey(),
+    '/experience': GlobalKey(),
+    '/education': GlobalKey(),
+    '/projects': GlobalKey(),
     '/contact': GlobalKey(),
   };
 
@@ -43,7 +47,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     for (final entry in _sectionKeys.entries) {
       final key = entry.value;
       if (key.currentContext != null) {
-        final RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
+        final RenderBox box =
+            key.currentContext!.findRenderObject() as RenderBox;
         final position = box.localToGlobal(Offset.zero);
         final sectionTop = position.dy - viewportHeight * 0.2;
 
@@ -81,8 +86,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   HeroSection(key: _sectionKeys['/home']),
                   AboutSection(key: _sectionKeys['/about']),
-                  ProjectsSection(key: _sectionKeys['/projects']),
                   SkillsSection(key: _sectionKeys['/skills']),
+                  ExperienceView(key: _sectionKeys['/experience']),
+                  EducationSection(key: _sectionKeys['/education']),
+                  ProjectsSection(key: _sectionKeys['/projects']),
                   ContactSection(key: _sectionKeys['/contact']),
                   const FooterView(),
                 ],

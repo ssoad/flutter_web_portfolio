@@ -30,17 +30,17 @@ class AboutSection extends ConsumerWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: _buildExperience(context, aboutData)),
-                const SizedBox(width: 40),
-                Expanded(child: _buildEducation(context, aboutData)),
+                // Expanded(child: _buildExperience(context, aboutData)),
+                // const SizedBox(width: 40),
+                // Expanded(child: _buildEducation(context, aboutData)),
               ],
             )
           else
             Column(
               children: [
-                _buildExperience(context, aboutData),
-                const SizedBox(height: 40),
-                _buildEducation(context, aboutData),
+                // _buildExperience(context, aboutData),
+                // const SizedBox(height: 40),
+                // _buildEducation(context, aboutData),
               ],
             ),
         ],
@@ -48,31 +48,31 @@ class AboutSection extends ConsumerWidget {
     );
   }
 
-  Widget _buildExperience(BuildContext context, AboutModel data) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Experience',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        const SizedBox(height: 20),
-        ...data.experiences.map((exp) => ExperienceCard(experience: exp)),
-      ],
-    );
-  }
+  // Widget _buildExperience(BuildContext context, AboutModel data) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         'Experience',
+  //         style: Theme.of(context).textTheme.headlineMedium,
+  //       ),
+  //       const SizedBox(height: 20),
+  //       ...data.experiences.map((exp) => ExperienceCard(experience: exp)),
+  //     ],
+  //   );
+  // }
 
-  Widget _buildEducation(BuildContext context, AboutModel data) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Education',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        const SizedBox(height: 20),
-        ...data.education.map((edu) => EducationCard(education: edu)),
-      ],
-    );
-  }
+  // Widget _buildEducation(BuildContext context, AboutModel data) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         'Education',
+  //         style: Theme.of(context).textTheme.headlineMedium,
+  //       ),
+  //       const SizedBox(height: 20),
+  //       ...data.education.map((edu) => EducationCard(education: edu)),
+  //     ],
+  //   );
+  // }
 }
