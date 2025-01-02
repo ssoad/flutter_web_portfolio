@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_experiment/config/constants.dart';
 import '../../../shared/utils/responsive_helper.dart';
 import 'dart:ui' as ui;
 
@@ -144,7 +145,7 @@ class NavigationBar extends ConsumerWidget {
         ],
       ),
       child: Text(
-        'SHEIKH SOAD',
+        AppConstants.name,
         style: TextStyle(
           fontSize: isDesktop ? 24 : 20,
           fontWeight: FontWeight.bold,
