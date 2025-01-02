@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_experiment/config/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../shared/utils/responsive_helper.dart';
 
@@ -39,7 +40,7 @@ class _HeroSectionState extends ConsumerState<HeroSection> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Sheikh Soad',
+                  AppConstants.name,
                   style: Theme.of(context).textTheme.displayLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
