@@ -85,7 +85,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Column(
                 children: [
                   HeroSection(key: _sectionKeys['/home']),
-                  AboutSection(key: _sectionKeys['/about']),
+                  AboutView(key: _sectionKeys['/about']),
                   SkillsSection(key: _sectionKeys['/skills']),
                   ExperienceView(key: _sectionKeys['/experience']),
                   EducationSection(key: _sectionKeys['/education']),

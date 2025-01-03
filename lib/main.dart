@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_experiment/config/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'features/home/screens/home_screen.dart';
 
@@ -16,13 +17,8 @@ class MyApp extends StatelessWidget {
       title: "Soad's Portfolio",
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
-      darkTheme: ThemeData.dark().copyWith(
-        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
-      ),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.poppinsTextTheme(),
-      ),
+      darkTheme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
       home: const HomeScreen(),
     );
   }
