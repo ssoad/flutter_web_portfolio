@@ -96,3 +96,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: FiraCode
+      fonts:
+        - asset: assets/fonts/FiraCode-Regular.ttf
+        - asset: assets/fonts/FiraCode-Bold.ttf
+          weight: 700

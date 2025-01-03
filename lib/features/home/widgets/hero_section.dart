@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../shared/utils/responsive_helper.dart';
 import '../../../config/constants.dart';
 import '../../../shared/widgets/custom_image.dart';
-import 'social_icon,dart';
+import 'social_icon.dart';
 
 class HeroSection extends ConsumerStatefulWidget {
   const HeroSection({super.key});
