@@ -24,9 +24,9 @@ class AppConstants {
   static String shortBio =
       "Flutter developer passionate about creating beautiful and functional applications.";
 
-  static var yearsOfExperience;
+  static int yearsOfExperience = DateTime.now().year - 2019;
 
-  static var projectsCompleted;
+  static var projectsCompleted = 10;
 
   static List<String> careerHighlights = [
     "Developed a Flutter app that has 10k+ downloads on Play Store.",
