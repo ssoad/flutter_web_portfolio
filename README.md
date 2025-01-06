@@ -87,6 +87,6 @@ Contributions, issues, and feature requests are welcome!
 Feel free to check the [issues page](url) and [contributing guidelines](url).
 
 <div align="center">
-Made with ❤️ by Sheikh Soad
+Made with ❤️ by Sohanuzzaman Soad
 
 </div>
