@@ -115,49 +115,145 @@ class AboutView extends ConsumerWidget {
   }
 
   Widget _buildProfileCard(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).primaryColor.withOpacity(0.1),
-            Theme.of(context).colorScheme.secondary.withOpacity(0.05),
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
-            blurRadius: 20,
-            spreadRadius: 5,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppConstants.shortBio,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  height: 1.8,
-                  letterSpacing: 0.5,
+    final isDesktop = ResponsiveHelper.isDesktop(context);
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        bool isCardHovered = false;
+
+        return MouseRegion(
+          onEnter: (_) => setState(() => isCardHovered = true),
+          onExit: (_) => setState(() => isCardHovered = false),
+          child: TweenAnimationBuilder(
+            duration: const Duration(milliseconds: 200),
+            tween: Tween<double>(begin: 1.0, end: isCardHovered ? 1.02 : 1.0),
+            builder: (context, double scale, child) {
+              return Transform.scale(
+                scale: scale,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(isDesktop ? 32 : 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Theme.of(context).cardColor,
+                        Theme.of(context).cardColor.withOpacity(0.8),
+                      ],
+                    ),
+                    border: Border.all(
+                      color: isCardHovered
+                          ? Theme.of(context).primaryColor.withOpacity(0.5)
+                          : Colors.transparent,
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).primaryColor.withOpacity(0.1),
+                        blurRadius: isCardHovered ? 20 : 10,
+                        spreadRadius: isCardHovered ? 5 : 0,
+                      ),
+                    ],
+                  ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final itemWidth = (constraints.maxWidth - 60) / 2;
+                      return Wrap(
+                        spacing: 20,
+                        runSpacing: 20,
+                        alignment: WrapAlignment.center,
+                        children: [
+                          _buildStatItem(context, "Years of Experience",
+                              "${AppConstants.yearsOfExperience}+", itemWidth),
+                          _buildStatItem(context, "Projects Delivered",
+                              "${AppConstants.projectsCompleted}+", itemWidth),
+                          _buildStatItem(context, "Client Satisfaction", "100%",
+                              itemWidth),
+                          _buildStatItem(
+                              context, "Code Coverage", "95%", itemWidth),
+                          _buildStatItem(
+                              context, "Apps Published", "15+", itemWidth),
+                          _buildStatItem(
+                              context, "Tech Stack", "Flutter/Dart", itemWidth),
+                        ],
+                      );
+                    },
+                  ),
                 ),
+              );
+            },
           ),
-          const SizedBox(height: 24),
-          _buildStatCard(
-            context,
-            "Years of Experience",
-            "${AppConstants.yearsOfExperience}+",
+        );
+      },
+    );
+  }
+
+  Widget _buildStatItem(
+      BuildContext context, String label, String value, double width) {
+    bool isItemHovered = false;
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return MouseRegion(
+          onEnter: (_) => setState(() => isItemHovered = true),
+          onExit: (_) => setState(() => isItemHovered = false),
+          child: TweenAnimationBuilder(
+            duration: const Duration(milliseconds: 200),
+            tween: Tween<double>(begin: 1.0, end: isItemHovered ? 1.05 : 1.0),
+            builder: (context, double scale, child) {
+              return Transform.scale(
+                scale: scale,
+                child: Container(
+                  width: width,
+                  height: width * 0.6,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Theme.of(context)
+                        .primaryColor
+                        .withOpacity(isItemHovered ? 0.15 : 0.1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context)
+                            .primaryColor
+                            .withOpacity(isItemHovered ? 0.2 : 0.0),
+                        blurRadius: isItemHovered ? 8 : 0,
+                        spreadRadius: isItemHovered ? 2 : 0,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FittedBox(
+                        child: Text(
+                          value,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      FittedBox(
+                        child: Text(
+                          label,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
-          const SizedBox(height: 16),
-          _buildStatCard(
-            context,
-            "Projects Completed",
-            "${AppConstants.projectsCompleted}+",
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
