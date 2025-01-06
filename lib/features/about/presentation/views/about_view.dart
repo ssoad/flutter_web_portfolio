@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_experiment/features/about/presentation/widgets/animated_code_editor.dart';
 
 import '../../../../config/constants.dart';
 import '../../../../shared/utils/responsive_helper.dart';
+import '../widgets/code_editor.dart';
 import '../widgets/code_editor_themes.dart';
 
 class AboutView extends ConsumerWidget {
@@ -83,202 +85,55 @@ class AboutView extends ConsumerWidget {
   }
 
   Widget _buildDesktopLayout(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Column(
       children: [
-        _buildCodeEditor(context),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 4,
-              child: _buildProfileCard(context),
-            ),
-            const SizedBox(width: 40),
-            Expanded(
-              flex: 8,
-              child: _buildAchievementsTimeline(context),
-            ),
-          ],
+        // Full width code editor
+        SizedBox(
+          width: size.width * 0.5,
+          child: _buildCodeEditor(context),
         ),
-      ],
-    );
-  }
-
-  Widget _buildMobileLayout(BuildContext context) {
-    return Column(
-      children: [
-        _buildProfileCard(context),
-        const SizedBox(height: 40),
-        _buildAchievementsTimeline(context),
-      ],
-    );
-  }
-
-  Widget _buildProfileCard(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).primaryColor.withOpacity(0.1),
-            Theme.of(context).colorScheme.secondary.withOpacity(0.05),
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
-            blurRadius: 20,
-            spreadRadius: 5,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppConstants.shortBio,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  height: 1.8,
-                  letterSpacing: 0.5,
-                ),
-          ),
-          const SizedBox(height: 24),
-          _buildStatCard(
-            context,
-            "Years of Experience",
-            "${AppConstants.yearsOfExperience}+",
-          ),
-          const SizedBox(height: 16),
-          _buildStatCard(
-            context,
-            "Projects Completed",
-            "${AppConstants.projectsCompleted}+",
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAchievementsTimeline(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Career Highlights',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        const SizedBox(height: 32),
-        ...AppConstants.careerHighlights.map(
-          (highlight) => _buildHighlightCard(context, highlight),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCodeEditor(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final syntax =
-        isDark ? CodeEditorTheme.darkSyntax : CodeEditorTheme.lightSyntax;
-    final backgroundColor = isDark
-        ? CodeEditorTheme.darkBackground
-        : CodeEditorTheme.lightBackground;
-    final headerColor =
-        isDark ? CodeEditorTheme.darkHeaderBg : CodeEditorTheme.lightHeaderBg;
-
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: headerColor,
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(12)),
-            ),
-            child: _buildEditorHeader(context),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildCodeLine(context, 'class AboutMe {', 1, syntax),
-                _buildCodeLine(
-                    context, '  String name = "Sheikh Soad";', 2, syntax),
-                _buildCodeLine(context, '  String title = "Flutter Developer";',
-                    3, syntax),
-                _buildCodeLine(context,
-                    '  String location = "Dhaka, Bangladesh";', 4, syntax),
-                _buildCodeLine(
-                    context, '  String email = "mdsoad@gmail.com";', 5, syntax),
-                _buildCodeLine(
-                    context, '  String github = "ssoad";', 6, syntax),
-                _buildCodeLine(
-                    context, '  String linkedin = "ssoad";', 7, syntax),
-                _buildCodeLine(
-                    context, '  String facebook = "sssoad";', 8, syntax),
-                _buildCodeLine(context, '}', 9, syntax),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEditorHeader(context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Row(
-      children: [
-        // Window Controls
-        Row(
-          children: [
-            _buildWindowButton(Colors.red.shade400),
-            const SizedBox(width: 8),
-            _buildWindowButton(Colors.amber.shade400),
-            const SizedBox(width: 8),
-            _buildWindowButton(Colors.green.shade400),
-          ],
-        ),
-        const SizedBox(width: 16),
-        // File Tab
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-          decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E1E1E) : const Color(0xFFF5F5F5),
-            borderRadius: BorderRadius.circular(6),
-          ),
+        const SizedBox(height: 60),
+        // Two column layout
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
-                Icons.code,
-                size: 16,
-                color: isDark ? Colors.grey[400] : Colors.grey[600],
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'about_me.dart',
-                style: TextStyle(
-                  fontFamily: 'FiraCode',
-                  fontSize: 13,
-                  color: isDark ? Colors.grey[400] : Colors.grey[600],
+              // Profile card with hover effect
+              // Expanded(
+              //   flex: 4,
+              //   child: TweenAnimationBuilder(
+              //     duration: const Duration(milliseconds: 200),
+              //     tween: Tween<double>(begin: 0, end: 1),
+              //     builder: (context, double value, child) {
+              //       return Transform.translate(
+              //         offset: Offset(0, 20 * (1 - value)),
+              //         child: Opacity(
+              //           opacity: value,
+              //           child: _buildProfileCard(context),
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
+              // const SizedBox(width: 60),
+              // Achievements timeline
+              Expanded(
+                flex: 6,
+                child: TweenAnimationBuilder(
+                  duration: const Duration(milliseconds: 200),
+                  tween: Tween<double>(begin: 0, end: 1),
+                  builder: (context, double value, child) {
+                    return Transform.translate(
+                      offset: Offset(0, 20 * (1 - value)),
+                      child: Opacity(
+                        opacity: value,
+                        child: _buildAchievementsTimeline(context),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -288,58 +143,220 @@ class AboutView extends ConsumerWidget {
     );
   }
 
-  Widget _buildWindowButton(Color color) {
-    return Container(
-      width: 12,
-      height: 12,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.black.withOpacity(0.1),
-          width: 0.5,
-        ),
-      ),
+  Widget _buildMobileLayout(BuildContext context) {
+    return Column(
+      children: [
+        // _buildProfileCard(context),
+        // const SizedBox(height: 40),
+        _buildAchievementsTimeline(context),
+      ],
     );
   }
 
-  Widget _buildCodeLine(BuildContext context, String code, int lineNumber,
-      Map<String, Color> syntax) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 40,
-            child: Text(
-              lineNumber.toString(),
-              style: TextStyle(
-                color: syntax['lineNumber'],
-                fontFamily: 'FiraCode',
-                fontSize: 14,
-                height: 1.5,
-              ),
-            ),
+  Widget _buildProfileCard(BuildContext context) {
+    final isDesktop = ResponsiveHelper.isDesktop(context);
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        bool isCardHovered = false;
+
+        return MouseRegion(
+          onEnter: (_) => setState(() => isCardHovered = true),
+          onExit: (_) => setState(() => isCardHovered = false),
+          child: TweenAnimationBuilder(
+            duration: const Duration(milliseconds: 200),
+            tween: Tween<double>(begin: 1.0, end: isCardHovered ? 1.02 : 1.0),
+            builder: (context, double scale, child) {
+              return Transform.scale(
+                scale: scale,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(isDesktop ? 32 : 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Theme.of(context).cardColor,
+                        Theme.of(context).cardColor.withOpacity(0.8),
+                      ],
+                    ),
+                    border: Border.all(
+                      color: isCardHovered
+                          ? Theme.of(context).primaryColor.withOpacity(0.5)
+                          : Colors.transparent,
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).primaryColor.withOpacity(0.1),
+                        blurRadius: isCardHovered ? 20 : 10,
+                        spreadRadius: isCardHovered ? 5 : 0,
+                      ),
+                    ],
+                  ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final itemWidth = (constraints.maxWidth - 60) / 2;
+                      return Wrap(
+                        spacing: 20,
+                        runSpacing: 20,
+                        alignment: WrapAlignment.center,
+                        children: [
+                          _buildStatItem(context, "Years of Experience",
+                              "${AppConstants.yearsOfExperience}+", itemWidth),
+                          _buildStatItem(context, "Projects Delivered",
+                              "${AppConstants.projectsCompleted}+", itemWidth),
+                          _buildStatItem(context, "Client Satisfaction", "100%",
+                              itemWidth),
+                          _buildStatItem(
+                              context, "Code Coverage", "95%", itemWidth),
+                          _buildStatItem(
+                              context, "Apps Published", "15+", itemWidth),
+                          _buildStatItem(
+                              context, "Tech Stack", "Flutter/Dart", itemWidth),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              code,
-              style: TextStyle(
-                color: code.startsWith('//')
-                    ? syntax['comment']
-                    : code.contains('"')
-                        ? syntax['string']
-                        : syntax['normal'],
-                fontFamily: 'FiraCode',
-                fontSize: 14,
-                height: 1.5,
-              ),
-            ),
+        );
+      },
+    );
+  }
+
+  Widget _buildStatItem(
+      BuildContext context, String label, String value, double width) {
+    bool isItemHovered = false;
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return MouseRegion(
+          onEnter: (_) => setState(() => isItemHovered = true),
+          onExit: (_) => setState(() => isItemHovered = false),
+          child: TweenAnimationBuilder(
+            duration: const Duration(milliseconds: 200),
+            tween: Tween<double>(begin: 1.0, end: isItemHovered ? 1.05 : 1.0),
+            builder: (context, double scale, child) {
+              return Transform.scale(
+                scale: scale,
+                child: Container(
+                  width: width,
+                  height: width * 0.7,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Theme.of(context)
+                        .primaryColor
+                        .withOpacity(isItemHovered ? 0.15 : 0.1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context)
+                            .primaryColor
+                            .withOpacity(isItemHovered ? 0.2 : 0.0),
+                        blurRadius: isItemHovered ? 8 : 0,
+                        spreadRadius: isItemHovered ? 2 : 0,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FittedBox(
+                        child: Text(
+                          value,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      FittedBox(
+                        child: Text(
+                          label,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        );
+      },
+    );
+  }
+
+  Widget _buildAchievementsTimeline(BuildContext context) {
+    final isDesktop = ResponsiveHelper.isDesktop(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Career Highlights',
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 16),
+        if (isDesktop)
+          // Desktop Layout
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(flex: 2, child: _buildProfileCard(context)),
+              const SizedBox(width: 60),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 32),
+                    ...AppConstants.careerHighlights.map(
+                      (highlight) => _buildHighlightCard(context, highlight),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+        else
+          // Mobile Layout
+          Column(
+            children: [
+              _buildProfileCard(context),
+              const SizedBox(height: 32),
+              ...AppConstants.careerHighlights.map(
+                (highlight) => _buildHighlightCard(context, highlight),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  Widget _buildCodeEditor(BuildContext context) {
+    return const AnimatedCodeEditor(
+      codeLines: [
+        'class AboutMe {',
+        '  String name = "Sheikh Soad";',
+        '  String title = "Flutter Developer";',
+        '  String location = "Dhaka, Bangladesh";',
+        '  String email = "mdsoad@gmail.com";',
+        '  String github = "ssoad";',
+        '  String linkedin = "ssoad";',
+        '  String facebook = "sssoad";',
+        '}',
+      ],
     );
   }
 
@@ -401,4 +418,11 @@ class AboutView extends ConsumerWidget {
       ),
     );
   }
+}
+
+class StatItem {
+  final String label;
+  final String value;
+
+  StatItem(this.label, this.value);
 }
