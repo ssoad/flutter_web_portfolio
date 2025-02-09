@@ -1,3 +1,5 @@
+import 'package:flutter/src/widgets/framework.dart';
+
 class ProjectModel {
   final String title;
   final String description;
@@ -7,6 +9,8 @@ class ProjectModel {
   final List<String> technologies;
   final DateTime date;
 
+  final String category;
+
   ProjectModel({
     required this.title,
     required this.description,
@@ -15,5 +19,6 @@ class ProjectModel {
     required this.liveUrl,
     required this.technologies,
     required this.date,
+    required this.category,
   });
 }

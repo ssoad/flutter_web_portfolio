@@ -11,6 +11,7 @@ final projectsProvider = Provider<List<ProjectModel>>((ref) {
       liveUrl: "https://ssoad.dev",
       technologies: ["Flutter", "Dart", "Riverpod", "Firebase"],
       date: DateTime.now(),
+      category: "Web Development",
     ),
     // Add more projects...
   ];
