@@ -86,10 +86,9 @@ class NavigationBar extends ConsumerWidget {
     bool isSelected,
     VoidCallback onTap,
   ) {
+    bool isHovered = false;
     return StatefulBuilder(
       builder: (context, setState) {
-        bool isHovered = false;
-
         return MouseRegion(
           onEnter: (_) => setState(() => isHovered = true),
           onExit: (_) => setState(() => isHovered = false),
