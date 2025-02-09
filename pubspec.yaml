@@ -43,6 +43,8 @@ dependencies:
   url_launcher: ^6.3.1
   animated_text_kit: ^4.2.2
   simple_animations: ^5.1.0
+  iconify_flutter: ^0.0.7
+  colorful_iconify_flutter: ^0.0.5
 
 dev_dependencies:
   flutter_test:
