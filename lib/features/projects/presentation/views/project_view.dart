@@ -98,21 +98,70 @@ class _ProjectsSectionState extends ConsumerState<ProjectsSection> {
           final isSelected = _selectedCategory == category;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: FilterChip(
-              selected: isSelected,
-              showCheckmark: false,
-              label: Text(category.toString()),
-              labelStyle: TextStyle(
-                color: isSelected
-                    ? Colors.white
-                    : Theme.of(context).textTheme.bodyLarge?.color,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: TweenAnimationBuilder(
+                duration: const Duration(milliseconds: 200),
+                tween: Tween<double>(begin: 0, end: isSelected ? 1.0 : 0.0),
+                builder: (context, double value, child) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).primaryColor.withOpacity(value),
+                          Theme.of(context)
+                              .colorScheme
+                              .secondary
+                              .withOpacity(value),
+                        ],
+                      ),
+                      border: Border.all(
+                        color: isSelected
+                            ? Colors.transparent
+                            : Theme.of(context).primaryColor.withOpacity(0.2),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context)
+                              .primaryColor
+                              .withOpacity(0.1 * value),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () =>
+                            setState(() => _selectedCategory = category),
+                        borderRadius: BorderRadius.circular(30),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                          child: Text(
+                            category,
+                            style: TextStyle(
+                              color: isSelected
+                                  ? Colors.white
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.color,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
-              backgroundColor: Theme.of(context).cardColor,
-              selectedColor: Theme.of(context).primaryColor,
-              onSelected: (selected) {
-                setState(() => _selectedCategory = category.toString());
-              },
             ),
           );
         }).toList(),
